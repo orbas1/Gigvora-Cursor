@@ -1,43 +1,65 @@
-# Gigvora Platform Upgrade – Addon Architecture
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-This repository contains the Gigvora platform upgrade delivered as a modular addon stack. Each addon extends the Sociopro core without entangling routes, namespaces, or configuration, ensuring teams can enable the upgrade incrementally while preserving domain ownership.
+<p align="center">
+<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-## Upgrade at a Glance
-- Addons remain fully isolated with their own service providers, configs, routes, and publish tags.
-- Mobile companions mirror backend capabilities so both the Laravel host and Flutter/phone clients evolve in lockstep.
-- Integration contracts require consuming another addon’s APIs instead of duplicating its data model or workflows.
+## About Laravel
 
-## Advertisement Addon
-- **Scope:** Complete ads manager spanning advertisers, campaigns, creatives, placements, targeting, reporting, forecasting, and affiliate payouts.
-- **Backend package:** `Advertisement_Laravel_package`; APIs under `/api/advertisement/*`, dashboards under `/advertisement/dashboard`, views in `resources/views/vendor/advertisement/*`, config namespace `advertisement`.
-- **Mobile addon:** `Advertisement_Flutter_addon` for campaign build, creative approvals, and reporting screens.
-- **Ownership rule:** Central source for ads, targeting logic, keyword pricing, and affiliate settlements—other addons must integrate through its APIs.
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-## Freelance Addon
-- **Scope:** Marketplace for gigs, projects, proposals, contracts, milestones, escrow, disputes, reviews, and dual-sided onboarding.
-- **Backend package:** `freelance_laravel_package` with publishable routes/migrations and views under `publishable/resources/views/vendor/freelance`.
-- **Mobile addon:** `freelance_phone_addon` (Riverpod) powering gig, project, dispute, escrow, and analytics journeys.
-- **Ownership rule:** Canonical system for gigs, projects, and escrow. Jobs, live events, or utilities must reference these endpoints instead of recreating freelance flows.
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-## Interactive Addon
-- **Scope:** Live-events stack for webinars, networking (incl. speed networking), podcasts, and broadcast interviews.
-- **Backend package:** `Webinar_networking_interview_and_Podcast_Laravel_package` with routes in `routes/web.php` + `routes/api.php`, views under `resources/views/vendor/live`, config namespace `webinar_networking_interview_podcast`, publish tags `wnip-*`.
-- **Mobile addon:** `webinar_networking_interview_podcast_flutter_addon` covering discovery, registration, waiting rooms, and live shells.
-- **Ownership rule:** Sole owner of live/recorded event concepts; other addons subscribe to events rather than redefining webinars or interviews.
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Jobs Addon
-- **Scope:** Jobs and ATS experience including search, posting, applications, pipeline stages, screening workflows, CV/cover letter storage, subscriptions, and interview scheduling.
-- **Backend package:** `Jobs_Laravel_package` with API routes in `routes/api.php`, web routes in `routes/web.php`, and views under `resources/views/vendor/jobs`.
-- **Mobile addon:** `Jobs_phone_addon` enabling seeker and employer journeys.
-- **Ownership rule:** Canonical source for permanent job postings and ATS stages. Freelance addon continues to own gig/project concepts.
+## Learning Laravel
 
-## Utilities Addon
-- **Scope:** Professional networking utilities, security hardening, analytics, media enhancements, upgraded messaging/search/stories, and storage management that wrap Sociopro services.
-- **Backend package:** `Utilities-Addon` with feature toggles in `config/pro_network_utilities_security_analytics.php`.
-- **Mobile addon:** `utilities_phone_addon` exposing shared menus, API clients, and state containers.
-- **Ownership rule:** Provides cross-cutting enhancements and must wrap (not replace) the core Sociopro domain—no duplication of ads, jobs, freelance, or live-event logic.
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-## Integration Guardrails
-- Namespace every route group (URI + route names) before mounting into the host to avoid collisions.
-- Use each addon’s config file to enable/disable upgrade features—never patch the host app config directly.
-- When features intersect (e.g., recommending jobs inside freelance dashboards), always call the owning addon’s API instead of reimplementing its domain logic.
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+
+## Laravel Sponsors
+
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+
+### Premium Partners
+
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Cubet Techno Labs](https://cubettech.com)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[Many](https://www.many.co.uk)**
+- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
+- **[DevSquad](https://devsquad.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[OP.GG](https://op.gg)**
+- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
+- **[Lendio](https://lendio.com)**
+
+## Contributing
+
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+
+## Code of Conduct
+
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# sociopro3
